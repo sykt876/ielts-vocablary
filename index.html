@@ -32,19 +32,28 @@
   </style>
 </head>
 <body>
+ <div id="app">
+  <!-- タイトル部分 -->
+  <h1 id="app-title">IELTS必須動詞150</h1>
+
+  <!-- 順番選択画面 -->
   <div id="order-selection">
-  <button onclick="startTest('ordered')">順番通り</button>
-  <button onclick="startTest('random')">ランダム</button>
-  <button onclick="startTest('10-random')">10問ランダム</button>
-  <button onclick="startTest('50-random')">50問ランダム</button>
+    <button onclick="startTest('ordered')">順番通り</button>
+    <button onclick="startTest('random')">ランダム</button>
+    <button onclick="startTest('10-random')">10問ランダム</button>
+    <button onclick="startTest('50-random')">50問ランダム</button>
+  </div>
+
+  <!-- 問題表示画面 -->
+  <div id="word-container" style="display: none;">
+    <div id="word"></div>
+    <div id="choices"></div>
+    <div id="result"></div>
+    <div id="example"></div>
+    <button onclick="nextQuestion()">次の問題へ</button>
+  </div>
 </div>
-<div id="word-container" style="display: none;">
-  <div id="word"></div>
-  <div id="choices"></div>
-  <div id="result"></div>
-  <div id="example"></div>
-  <button onclick="nextQuestion()">次の問題へ</button>
-</div>
+
 
 
   <script src="script.js"></script>
