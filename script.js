@@ -974,13 +974,23 @@ let answeredCount = 0;
 let wrongAnswers = [];
 
 // テスト開始
-function startTest(order) {
+function startTest(order, limit = null) {
   currentIndex = 0;
   correctAnswers = 0;
   answeredCount = 0;
   wrongAnswers = [];
 
-  currentOrder = order === 'random' ? shuffle(Object.keys(words)) : Object.keys(words);
+  // 順番選択
+  let allWords = Object.keys(words);
+  if (order === 'random') {
+    currentOrder = shuffle(allWords);
+  } else if (order === '10-random') {
+    currentOrder = shuffle(allWords).slice(0, 10); // 10問ランダム
+  } else if (order === '50-random') {
+    currentOrder = shuffle(allWords).slice(0, 50); // 50問ランダム
+  } else {
+    currentOrder = allWords; // 順番通り
+  }
 
   document.getElementById('order-selection').style.display = 'none';
   document.getElementById('word-container').style.display = 'block';
@@ -1002,7 +1012,8 @@ function loadQuestion() {
   const wordKey = currentOrder[currentIndex];
   const wordData = words[wordKey];
 
-  document.getElementById("word").textContent = wordKey;
+  // 問題番号の表示
+  document.getElementById("word").textContent = `第${currentIndex + 1}問: ${wordKey}`;
 
   const options = generateOptions(wordData.meaning);
   const choicesDiv = document.getElementById("choices");
@@ -1044,33 +1055,25 @@ function checkAnswer(selectedAnswer, wordData) {
   if (selectedAnswer === wordData.meaning) {
     correctAnswers++;
     resultDiv.textContent = "正解！";
-    exampleDiv.innerHTML = `
-      <strong>例文:</strong> ${wordData.example}<br>
-      <strong>日本語訳:</strong> ${wordData.japanese}
-    `;
   } else {
     wrongAnswers.push(currentOrder[currentIndex]);
     resultDiv.textContent = "不正解！";
-    exampleDiv.innerHTML = `
-      <strong>正解:</strong> ${wordData.meaning}<br>
-      <strong>例文:</strong> ${wordData.example}<br>
-      <strong>日本語訳:</strong> ${wordData.japanese}
-    `;
   }
 
-  if (answeredCount % 10 === 0) {
-    alert(`10問中 ${correctAnswers} 問正解しています！`);
-  }
+  exampleDiv.innerHTML = `
+    <strong>正解:</strong> ${wordData.meaning}<br>
+    <strong>例文:</strong> ${wordData.example}<br>
+    <strong>日本語訳:</strong> ${wordData.japanese}
+  `;
 }
 
 // 次の問題へ
 function nextQuestion() {
-  currentIndex++;
-  if (currentIndex >= currentOrder.length) {
+  if (currentIndex + 1 >= currentOrder.length) {
     displayFinalResults();
     return;
   }
-
+  currentIndex++;
   loadQuestion();
 }
 
@@ -1100,6 +1103,7 @@ function displayFinalResults() {
 
 // テストリセット
 function resetTest() {
+  wrongAnswers = [];
   document.getElementById('word-container').style.display = 'none';
   document.getElementById('order-selection').style.display = 'block';
 }
