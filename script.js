@@ -981,7 +981,7 @@ function startTest(order, limit = null) {
   wrongAnswers = [];
 
   // 順番選択
-  let allWords = Object.keys(words);
+ let allWords = Object.keys(words);
   if (order === 'random') {
     currentOrder = shuffle(allWords);
   } else if (order === '10-random') {
@@ -992,6 +992,10 @@ function startTest(order, limit = null) {
     currentOrder = allWords; // 順番通り
   }
 
+   // タイトルを非表示
+  document.getElementById('app-title').style.display = 'none';
+
+  // 順番選択画面を非表示
   document.getElementById('order-selection').style.display = 'none';
   document.getElementById('word-container').style.display = 'block';
 
@@ -1106,4 +1110,7 @@ function resetTest() {
   wrongAnswers = [];
   document.getElementById('word-container').style.display = 'none';
   document.getElementById('order-selection').style.display = 'block';
+  
+  // タイトルを再表示
+  document.getElementById('app-title').style.display = 'block';
 }
