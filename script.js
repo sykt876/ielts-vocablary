@@ -1,29 +1,4 @@
 const words = {
-  "agree to/with A": {
-    "meaning": "Aに同意する、Aと一致する",
-    "example": "I agree to your proposal.",
-    "japanese": "私はあなたの提案に同意します。"
-  },
-  "assure A that S V": {
-    "meaning": "AにSがVすることを保証する",
-    "example": "I assure you that everything will be fine.",
-    "japanese": "私はあなたに全てがうまくいくことを保証します。"
-  },
-  "establish": {
-    "meaning": "設立する、確立する",
-    "example": "The company was established in 1990.",
-    "japanese": "その会社は1990年に設立されました。"
-  },
-  "compare A with/to B": {
-    "meaning": "AをBと比較する",
-    "example": "Compare the prices of the two products.",
-    "japanese": "2つの製品の価格を比較してください。"
-  },
-  "persuade A to V": {
-    "meaning": "AにVするよう説得する",
-    "example": "She persuaded him to join the team.",
-    "japanese": "彼女は彼にチームに参加するよう説得しました。"
-  },
    "agree to/with A": {
         "meaning": "Aに同意する、Aと一致する",
         "example": "I agree to your proposal.",
