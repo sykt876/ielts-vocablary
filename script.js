@@ -14,7 +14,7 @@ const words = {
     "example": "The company was established in 1990.",
     "japanese": "その会社は1990年に設立されました。"
   }
-  // 必要に応じて単語を追加
+  // 必要に応じて他の単語を追加
 };
 
 let currentIndex = 0;
@@ -94,14 +94,17 @@ function checkAnswer(selectedAnswer, wordData) {
   if (selectedAnswer === wordData.meaning) {
     correctAnswers++;
     resultDiv.textContent = "正解！";
-    exampleDiv.textContent = `例文: ${wordData.example} (${wordData.japanese})`;
+    exampleDiv.innerHTML = `
+      <strong>例文:</strong> ${wordData.example}<br>
+      <strong>日本語訳:</strong> ${wordData.japanese}
+    `;
   } else {
     wrongAnswers.push(currentOrder[currentIndex]);
-    resultDiv.textContent = "不正解。正解は以下です：";
+    resultDiv.textContent = "不正解！";
     exampleDiv.innerHTML = `
-      正解: ${wordData.meaning}<br>
-      例文: ${wordData.example}<br>
-      日本語訳: ${wordData.japanese}
+      <strong>正解:</strong> ${wordData.meaning}<br>
+      <strong>例文:</strong> ${wordData.example}<br>
+      <strong>日本語訳:</strong> ${wordData.japanese}
     `;
   }
 
