@@ -14,14 +14,14 @@ const words = {
     "example": "The company was established in 1990.",
     "japanese": "その会社は1990年に設立されました。"
   }
-  // 必要に応じて他の単語を追加
+  // 必要に応じて単語を追加
 };
 
 let currentIndex = 0;
 let currentOrder = [];
-let correctAnswers = 0; // 正答数を記録
-let answeredCount = 0; // 解答数をカウント
-let wrongAnswers = []; // 間違えた単語を記録
+let correctAnswers = 0;
+let answeredCount = 0;
+let wrongAnswers = [];
 
 // テスト開始
 function startTest(order) {
@@ -61,7 +61,7 @@ function loadQuestion() {
   options.forEach(option => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.onclick = () => checkAnswer(option, wordData.meaning);
+    button.onclick = () => checkAnswer(option, wordData);
     choicesDiv.appendChild(button);
   });
 
@@ -85,20 +85,24 @@ function generateOptions(correctAnswer) {
 }
 
 // 答えをチェック
-function checkAnswer(selectedAnswer, correctAnswer) {
+function checkAnswer(selectedAnswer, wordData) {
   const resultDiv = document.getElementById("result");
   const exampleDiv = document.getElementById("example");
 
   answeredCount++;
 
-  if (selectedAnswer === correctAnswer) {
+  if (selectedAnswer === wordData.meaning) {
     correctAnswers++;
     resultDiv.textContent = "正解！";
-    exampleDiv.textContent = `例文: ${words[currentOrder[currentIndex]].example} (${words[currentOrder[currentIndex]].japanese})`;
+    exampleDiv.textContent = `例文: ${wordData.example} (${wordData.japanese})`;
   } else {
     wrongAnswers.push(currentOrder[currentIndex]);
-    resultDiv.textContent = "不正解。";
-    exampleDiv.textContent = "";
+    resultDiv.textContent = "不正解。正解は以下です：";
+    exampleDiv.innerHTML = `
+      正解: ${wordData.meaning}<br>
+      例文: ${wordData.example}<br>
+      日本語訳: ${wordData.japanese}
+    `;
   }
 
   if (answeredCount % 10 === 0) {
@@ -106,7 +110,7 @@ function checkAnswer(selectedAnswer, correctAnswer) {
   }
 }
 
-// 次の問題
+// 次の問題へ
 function nextQuestion() {
   currentIndex++;
   if (currentIndex >= currentOrder.length) {
@@ -124,7 +128,6 @@ function displayFinalResults() {
 
   alert(`テスト終了！\n合計: ${totalQuestions} 問\n正答数: ${correctAnswers} 問\n正答率: ${scorePercentage}%`);
 
-  // 復習モードの選択
   if (wrongAnswers.length > 0) {
     const retry = confirm("間違えた単語の復習をしますか？");
     if (retry) {
